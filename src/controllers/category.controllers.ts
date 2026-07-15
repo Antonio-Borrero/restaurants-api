@@ -3,7 +3,7 @@ import { findRestaurantByIdService } from "../services/restaurant.services.ts";
 import { createCategoryService } from "../services/category.services.ts";
 
 export async function createCategoryController(req: Request, res: Response) {
-	const restaurantId = Number(req.params.id);
+	const restaurantId = Number(req.params.restaurantId);
 	const { translations } = req.body;
 
 	if (!Array.isArray(translations) || translations.length === 0) {

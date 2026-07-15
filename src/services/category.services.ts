@@ -14,3 +14,9 @@ export async function createCategoryService(
 		include: { translations: true },
 	});
 }
+
+export async function findCategoryByIdService(categoryId: number) {
+	return await prisma.category.findUnique({
+		where: { id: categoryId },
+	});
+}
