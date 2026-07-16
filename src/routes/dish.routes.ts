@@ -1,7 +1,11 @@
 import { Router } from "express";
-import { createDishController } from "../controllers/dish.controllers.ts";
+import {
+	createDishController,
+	getDishController,
+} from "../controllers/dish.controllers.ts";
 
-const dishRouter = Router({ mergeParams: true });
-dishRouter.post("/", createDishController);
+export const categoryDishRouter = Router({ mergeParams: true });
+categoryDishRouter.post("/", createDishController);
 
-export default dishRouter;
+export const dishRouter = Router();
+dishRouter.get("/:dishId", getDishController);

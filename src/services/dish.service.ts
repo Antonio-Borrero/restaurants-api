@@ -24,3 +24,14 @@ export async function createDishService(data: {
 		include: { translations: true },
 	});
 }
+
+export async function getDishService(dishId: number, locale: string) {
+	return await prisma.dish.findUnique({
+		where: { id: dishId },
+		include: {
+			translations: {
+				where: { locale },
+			},
+		},
+	});
+}
