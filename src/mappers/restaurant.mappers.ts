@@ -15,7 +15,7 @@ type RestaurantMenu = Prisma.RestaurantGetPayload<{
 	};
 }>;
 
-export default function formatMenu(restaurant: RestaurantMenu) {
+export function formatMenu(restaurant: RestaurantMenu) {
 	return {
 		id: restaurant.id,
 		name: restaurant.name,

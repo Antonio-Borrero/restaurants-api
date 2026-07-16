@@ -3,7 +3,7 @@ import {
 	createRestaurantService,
 	getRestaurantMenuService,
 } from "../services/restaurant.services.ts";
-import formatMenu from "../mappers/restaurant.mappers.ts";
+import { formatMenu } from "../mappers/restaurant.mappers.ts";
 import {
 	createRestaurantSchema,
 	getMenuQuerySchema,
