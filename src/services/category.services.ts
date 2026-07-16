@@ -20,3 +20,14 @@ export async function findCategoryByIdService(categoryId: number) {
 		where: { id: categoryId },
 	});
 }
+
+export async function getCategoryService(categoryId: number, locale: string) {
+	return await prisma.category.findUnique({
+		where: { id: categoryId },
+		include: {
+			translations: {
+				where: { locale },
+			},
+		},
+	});
+}

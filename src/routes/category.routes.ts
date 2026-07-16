@@ -1,8 +1,11 @@
 import { Router } from "express";
-import { createCategoryController } from "../controllers/category.controllers.ts";
+import {
+	createCategoryController,
+	getCategoryController,
+} from "../controllers/category.controllers.ts";
 
-const categoryRouter = Router({ mergeParams: true });
+export const restaurantCategoryRouter = Router({ mergeParams: true });
+restaurantCategoryRouter.post("/", createCategoryController);
 
-categoryRouter.post("/", createCategoryController);
-
-export default categoryRouter;
+export const categoryRouter = Router();
+categoryRouter.get("/:categoryId", getCategoryController);
