@@ -35,3 +35,15 @@ export async function getDishService(dishId: number, locale: string) {
 		},
 	});
 }
+
+export async function findDishByIdService(dishId: number) {
+	return await prisma.dish.findUnique({
+		where: { id: dishId },
+	});
+}
+
+export async function deleteDishService(dishId: number) {
+	return await prisma.dish.delete({
+		where: { id: dishId },
+	});
+}

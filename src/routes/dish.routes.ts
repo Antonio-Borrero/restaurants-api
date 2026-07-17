@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
 	createDishController,
+	deleteDishController,
 	getDishController,
 } from "../controllers/dish.controllers.ts";
 
@@ -9,3 +10,4 @@ categoryDishRouter.post("/", createDishController);
 
 export const dishRouter = Router();
 dishRouter.get("/:dishId", getDishController);
+dishRouter.delete("/:dishId", deleteDishController);
