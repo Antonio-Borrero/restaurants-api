@@ -2,11 +2,14 @@ import type { Request, Response } from "express";
 import { findRestaurantByIdService } from "../services/restaurant.services.ts";
 import {
 	createCategoryService,
+	deleteCategoryService,
+	findCategoryByIdService,
 	getCategoryService,
 } from "../services/category.services.ts";
 import { createCategorySchema } from "../schemas/category.schemas.ts";
 import { getMenuQuerySchema } from "../schemas/restaurant.schemas.ts";
 import { formatCategory } from "../mappers/category.mappers.ts";
+import { countDishesService } from "../services/dish.service.ts";
 
 export async function createCategoryController(req: Request, res: Response) {
 	const restaurantId = Number(req.params.restaurantId);
@@ -31,4 +34,26 @@ export async function getCategoryController(req: Request, res: Response) {
 	}
 
 	return res.json(formatCategory(category));
+}
+
+export async function deleteCategoryController(req: Request, res: Response) {
+	const categoryId = Number(req.params.categoryId);
+	const confirm = req.query.confirm;
+
+	const category = await findCategoryByIdService(categoryId);
+
+	if (!category) {
+		return res.status(404).json({ error: "Categoría no encontrada" });
+	}
+
+	const dishes = await countDishesService(categoryId);
+
+	if (dishes > 0 && !confirm) {
+		return res.status(409).json({
+			error: `Esta categoría tiene ${dishes} platos, ¿estás seguro de borrarla?`,
+		});
+	}
+
+	await deleteCategoryService(categoryId);
+	return res.status(204).send();
 }

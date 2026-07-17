@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
 	createCategoryController,
+	deleteCategoryController,
 	getCategoryController,
 } from "../controllers/category.controllers.ts";
 
@@ -9,3 +10,4 @@ restaurantCategoryRouter.post("/", createCategoryController);
 
 export const categoryRouter = Router();
 categoryRouter.get("/:categoryId", getCategoryController);
+categoryRouter.delete("/:categoryId", deleteCategoryController);

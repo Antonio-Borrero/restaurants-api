@@ -31,3 +31,9 @@ export async function getCategoryService(categoryId: number, locale: string) {
 		},
 	});
 }
+
+export async function deleteCategoryService(categoryId: number) {
+	return await prisma.category.delete({
+		where: { id: categoryId },
+	});
+}
