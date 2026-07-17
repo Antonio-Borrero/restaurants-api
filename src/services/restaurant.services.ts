@@ -34,3 +34,9 @@ export async function getRestaurantMenuService(
 		},
 	});
 }
+
+export async function deleteRestaurantService(restaurantId: number) {
+	return await prisma.restaurant.delete({
+		where: { id: restaurantId },
+	});
+}

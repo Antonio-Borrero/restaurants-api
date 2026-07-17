@@ -53,3 +53,11 @@ export async function countDishesByCategoryService(categoryId: number) {
 		where: { categoryId },
 	});
 }
+
+export async function countDishesByRestaurantService(restaurantId: number) {
+	return await prisma.dish.count({
+		where: {
+			category: { restaurantId },
+		},
+	});
+}

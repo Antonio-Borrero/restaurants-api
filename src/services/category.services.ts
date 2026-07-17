@@ -37,3 +37,9 @@ export async function deleteCategoryService(categoryId: number) {
 		where: { id: categoryId },
 	});
 }
+
+export async function countCategoriesByRestaurantService(restaurantId: number) {
+	return await prisma.category.count({
+		where: { restaurantId },
+	});
+}
