@@ -48,7 +48,7 @@ export async function deleteDishService(dishId: number) {
 	});
 }
 
-export async function countDishesService(categoryId: number) {
+export async function countDishesByCategoryService(categoryId: number) {
 	return await prisma.dish.count({
 		where: { categoryId },
 	});

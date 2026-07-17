@@ -9,7 +9,7 @@ import {
 import { createCategorySchema } from "../schemas/category.schemas.ts";
 import { getMenuQuerySchema } from "../schemas/restaurant.schemas.ts";
 import { formatCategory } from "../mappers/category.mappers.ts";
-import { countDishesService } from "../services/dish.service.ts";
+import { countDishesByCategoryService } from "../services/dish.service.ts";
 
 export async function createCategoryController(req: Request, res: Response) {
 	const restaurantId = Number(req.params.restaurantId);
@@ -46,7 +46,7 @@ export async function deleteCategoryController(req: Request, res: Response) {
 		return res.status(404).json({ error: "Categoría no encontrada" });
 	}
 
-	const dishes = await countDishesService(categoryId);
+	const dishes = await countDishesByCategoryService(categoryId);
 
 	if (dishes > 0 && !confirm) {
 		return res.status(409).json({
