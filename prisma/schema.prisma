@@ -28,9 +28,9 @@ model Restaurant {
 model RestaurantMember {
   id           Int        @id @default(autoincrement())
   userId       Int
-  user         User       @relation(fields: [userId], references: [id])
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   restaurantId Int
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   role         String     // "OWNER", "STAFF"... 
   createdAt    DateTime   @default(now())
 
@@ -40,7 +40,7 @@ model RestaurantMember {
 model Category {
   id           Int                    @id @default(autoincrement())
   restaurantId Int
-  restaurant   Restaurant             @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant             @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   dishes       Dish[]
   translations CategoryTranslation[]
   createdAt    DateTime               @default(now())
@@ -50,7 +50,7 @@ model Category {
 model CategoryTranslation {
   id         Int      @id @default(autoincrement())
   categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   locale     String
   name       String
 
@@ -63,7 +63,7 @@ model Dish {
   allergens    String[]
   price        Decimal           @db.Decimal(10, 2)
   categoryId   Int
-  category     Category          @relation(fields: [categoryId], references: [id])
+  category     Category          @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   translations DishTranslation[]
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
@@ -72,7 +72,7 @@ model Dish {
 model DishTranslation {
   id          Int    @id @default(autoincrement())
   dishId      Int
-  dish        Dish   @relation(fields: [dishId], references: [id])
+  dish        Dish   @relation(fields: [dishId], references: [id], onDelete: Cascade)
   locale      String // "es", "en", "fr"
   name        String
   description String?
