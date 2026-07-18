@@ -9,3 +9,5 @@ export const getMenuQuerySchema = z.object({
 		.string({ error: "El parámetro 'locale' es obligatorio" })
 		.min(1, "El parámetro 'locale' no puede estar vacío"),
 });
+
+export const updateRestaurantSchema = createRestaurantSchema.partial();

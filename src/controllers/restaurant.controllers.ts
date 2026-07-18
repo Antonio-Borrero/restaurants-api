@@ -4,11 +4,13 @@ import {
 	deleteRestaurantService,
 	findRestaurantByIdService,
 	getRestaurantMenuService,
+	updateRestaurantService,
 } from "../services/restaurant.services.ts";
 import { formatMenu } from "../mappers/restaurant.mappers.ts";
 import {
 	createRestaurantSchema,
 	getMenuQuerySchema,
+	updateRestaurantSchema,
 } from "../schemas/restaurant.schemas.ts";
 import { countCategoriesByRestaurantService } from "../services/category.services.ts";
 import { countDishesByRestaurantService } from "../services/dish.service.ts";
@@ -53,4 +55,20 @@ export async function deleteRestaurantController(req: Request, res: Response) {
 
 	await deleteRestaurantService(restaurantId);
 	return res.status(204).send();
+}
+
+export async function updateRestaurantController(req: Request, res: Response) {
+	const data = updateRestaurantSchema.parse(req.body);
+	const restaurantId = Number(req.params.restaurantId);
+
+	const restaurant = await findRestaurantByIdService(restaurantId);
+
+	if (!restaurant) {
+		return res
+			.status(404)
+			.json({ error: "No se ha encontrado un restaurante con ese id" });
+	}
+
+	const updatedRestaurant = await updateRestaurantService(restaurantId, data);
+	return res.status(200).json(updatedRestaurant);
 }

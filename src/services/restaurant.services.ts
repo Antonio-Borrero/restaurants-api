@@ -1,3 +1,4 @@
+import type { Prisma } from "../../generated/prisma/client.ts";
 import { prisma } from "../lib/prisma.ts";
 
 export async function createRestaurantService(name: string) {
@@ -38,5 +39,15 @@ export async function getRestaurantMenuService(
 export async function deleteRestaurantService(restaurantId: number) {
 	return await prisma.restaurant.delete({
 		where: { id: restaurantId },
+	});
+}
+
+export async function updateRestaurantService(
+	restaurantId: number,
+	data: Prisma.RestaurantUpdateInput,
+) {
+	return await prisma.restaurant.update({
+		where: { id: restaurantId },
+		data,
 	});
 }
