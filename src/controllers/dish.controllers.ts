@@ -5,8 +5,9 @@ import {
 	deleteDishService,
 	findDishByIdService,
 	getDishService,
+	updateDishService,
 } from "../services/dish.service.ts";
-import { createDishSchema } from "../schemas/dish.schemas.ts";
+import { createDishSchema, updateDishSchema } from "../schemas/dish.schemas.ts";
 import { getMenuQuerySchema } from "../schemas/restaurant.schemas.ts";
 import { formatDish } from "../mappers/dish.mappers.ts";
 
@@ -56,4 +57,18 @@ export async function deleteDishController(req: Request, res: Response) {
 	await deleteDishService(dishId);
 
 	return res.status(204).send();
+}
+
+export async function updateDishController(req: Request, res: Response) {
+	const dishId = Number(req.params.dishId);
+	const data = updateDishSchema.parse(req.body);
+
+	const dish = await findDishByIdService(dishId);
+
+	if (!dish) {
+		return res.status(404).json({ error: "Plato no encontrado" });
+	}
+
+	const updatedDish = await updateDishService(dishId, data);
+	return res.status(200).json(updatedDish);
 }
