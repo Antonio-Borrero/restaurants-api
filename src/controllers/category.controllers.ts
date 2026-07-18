@@ -5,8 +5,12 @@ import {
 	deleteCategoryService,
 	findCategoryByIdService,
 	getCategoryService,
+	updateCategoryService,
 } from "../services/category.services.ts";
-import { createCategorySchema } from "../schemas/category.schemas.ts";
+import {
+	createCategorySchema,
+	updateCategorySchema,
+} from "../schemas/category.schemas.ts";
 import { getMenuQuerySchema } from "../schemas/restaurant.schemas.ts";
 import { formatCategory } from "../mappers/category.mappers.ts";
 import { countDishesByCategoryService } from "../services/dish.service.ts";
@@ -56,4 +60,18 @@ export async function deleteCategoryController(req: Request, res: Response) {
 
 	await deleteCategoryService(categoryId);
 	return res.status(204).send();
+}
+
+export async function updateCategoryController(req: Request, res: Response) {
+	const categoryId = Number(req.params.categoryId);
+	const { translations } = updateCategorySchema.parse(req.body);
+
+	const category = await findCategoryByIdService(categoryId);
+
+	if (!category) {
+		return res.status(404).json({ error: "Categoría no encontrada" });
+	}
+
+	const updatedCategory = await updateCategoryService(categoryId, translations);
+	return res.status(200).json(updatedCategory);
 }

@@ -43,3 +43,23 @@ export async function countCategoriesByRestaurantService(restaurantId: number) {
 		where: { restaurantId },
 	});
 }
+
+export async function updateCategoryService(
+	categoryId: number,
+	translations: { locale: string; name: string }[],
+) {
+	return await prisma.category.update({
+		where: { id: categoryId },
+		data: {
+			translations: {
+				upsert: translations.map((translation) => ({
+					where: {
+						categoryId_locale: { categoryId, locale: translation.locale },
+					},
+					update: { name: translation.name },
+					create: { locale: translation.locale, name: translation.name },
+				})),
+			},
+		},
+	});
+}

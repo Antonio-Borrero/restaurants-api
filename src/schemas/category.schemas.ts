@@ -10,3 +10,5 @@ export const createCategorySchema = z.object({
 		)
 		.min(1, "Se requiere al menos una traducción"),
 });
+
+export const updateCategorySchema = createCategorySchema;
