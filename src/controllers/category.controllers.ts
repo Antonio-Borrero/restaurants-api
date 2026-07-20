@@ -14,6 +14,9 @@ import {
 import { getMenuQuerySchema } from "../schemas/restaurant.schemas.ts";
 import { formatCategory } from "../mappers/category.mappers.ts";
 import { countDishesByCategoryService } from "../services/dish.service.ts";
+import { NotFoundError } from "../errors/NotFoundError.ts";
+import { ConflictError } from "../errors/ConflictError.ts";
+import { CATEGORY_NOT_FOUND } from "../errors/messages.ts";
 
 export async function createCategoryController(req: Request, res: Response) {
 	const restaurantId = Number(req.params.restaurantId);
@@ -21,7 +24,10 @@ export async function createCategoryController(req: Request, res: Response) {
 
 	const restaurant = await findRestaurantByIdService(restaurantId);
 	if (!restaurant) {
-		return res.status(404).json({ error: "Restaurante no encontrado" });
+		throw new NotFoundError(
+			CATEGORY_NOT_FOUND.code,
+			CATEGORY_NOT_FOUND.message,
+		);
 	}
 
 	const category = await createCategoryService(restaurantId, translations);
@@ -34,7 +40,10 @@ export async function getCategoryController(req: Request, res: Response) {
 
 	const category = await getCategoryService(categoryId, locale);
 	if (!category) {
-		return res.status(404).json({ error: "Categoría no encontrada" });
+		throw new NotFoundError(
+			CATEGORY_NOT_FOUND.code,
+			CATEGORY_NOT_FOUND.message,
+		);
 	}
 
 	return res.json(formatCategory(category));
@@ -47,15 +56,19 @@ export async function deleteCategoryController(req: Request, res: Response) {
 	const category = await findCategoryByIdService(categoryId);
 
 	if (!category) {
-		return res.status(404).json({ error: "Categoría no encontrada" });
+		throw new NotFoundError(
+			CATEGORY_NOT_FOUND.code,
+			CATEGORY_NOT_FOUND.message,
+		);
 	}
 
 	const dishes = await countDishesByCategoryService(categoryId);
 
 	if (dishes > 0 && !confirm) {
-		return res.status(409).json({
-			error: `Esta categoría tiene ${dishes} platos, ¿estás seguro de borrarla?`,
-		});
+		throw new ConflictError(
+			"CATEGORY_HAS_CONTENT",
+			`This category has ${dishes} dishes. Are you sure you want to delete it?`,
+		);
 	}
 
 	await deleteCategoryService(categoryId);
@@ -69,7 +82,10 @@ export async function updateCategoryController(req: Request, res: Response) {
 	const category = await findCategoryByIdService(categoryId);
 
 	if (!category) {
-		return res.status(404).json({ error: "Categoría no encontrada" });
+		throw new NotFoundError(
+			CATEGORY_NOT_FOUND.code,
+			CATEGORY_NOT_FOUND.message,
+		);
 	}
 
 	const updatedCategory = await updateCategoryService(categoryId, translations);

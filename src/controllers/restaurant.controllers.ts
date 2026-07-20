@@ -14,6 +14,9 @@ import {
 } from "../schemas/restaurant.schemas.ts";
 import { countCategoriesByRestaurantService } from "../services/category.services.ts";
 import { countDishesByRestaurantService } from "../services/dish.service.ts";
+import { NotFoundError } from "../errors/NotFoundError.ts";
+import { ConflictError } from "../errors/ConflictError.ts";
+import { RESTAURANT_NOT_FOUND } from "../errors/messages.ts";
 
 export async function createRestaurantController(req: Request, res: Response) {
 	const { name } = createRestaurantSchema.parse(req.body);
@@ -28,7 +31,10 @@ export async function getRestaurantMenuController(req: Request, res: Response) {
 	const restaurant = await getRestaurantMenuService(restaurantId, locale);
 
 	if (!restaurant) {
-		return res.status(404).json({ error: "Restaurante no encontrado" });
+		throw new NotFoundError(
+			RESTAURANT_NOT_FOUND.code,
+			RESTAURANT_NOT_FOUND.message,
+		);
 	}
 
 	res.json(formatMenu(restaurant));
@@ -41,16 +47,20 @@ export async function deleteRestaurantController(req: Request, res: Response) {
 	const restaurant = await findRestaurantByIdService(restaurantId);
 
 	if (!restaurant) {
-		return res.status(404).json({ error: "Restaurante no encontrado" });
+		throw new NotFoundError(
+			RESTAURANT_NOT_FOUND.code,
+			RESTAURANT_NOT_FOUND.message,
+		);
 	}
 
 	const categories = await countCategoriesByRestaurantService(restaurantId);
 	const dishes = await countDishesByRestaurantService(restaurantId);
 
 	if (categories > 0 && !confirm) {
-		return res.status(409).json({
-			error: `Este local tiene ${categories} categorías y ${dishes} platos, ¿estás seguro de borrarlo?`,
-		});
+		throw new ConflictError(
+			"RESTAURANT_HAS_CONTENT",
+			`This restaurant has ${categories} categories and ${dishes} dishes. Are you sure you want to delete it?`,
+		);
 	}
 
 	await deleteRestaurantService(restaurantId);
@@ -64,9 +74,10 @@ export async function updateRestaurantController(req: Request, res: Response) {
 	const restaurant = await findRestaurantByIdService(restaurantId);
 
 	if (!restaurant) {
-		return res
-			.status(404)
-			.json({ error: "No se ha encontrado un restaurante con ese id" });
+		throw new NotFoundError(
+			RESTAURANT_NOT_FOUND.code,
+			RESTAURANT_NOT_FOUND.message,
+		);
 	}
 
 	const updatedRestaurant = await updateRestaurantService(restaurantId, data);

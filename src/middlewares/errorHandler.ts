@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
+import { AppError } from "../errors/AppError.ts";
 
 export function errorHandler(
 	error: unknown,
@@ -11,13 +12,30 @@ export function errorHandler(
 
 	if (error instanceof ZodError) {
 		return res.status(400).json({
-			error: "Datos invalidos",
-			details: error.issues.map((issue) => ({
-				campo: issue.path.join("."),
-				mensaje: issue.message,
-			})),
+			error: {
+				code: "VALIDATION_ERROR",
+				message: "Invalid data",
+				details: error.issues.map((issue) => ({
+					field: issue.path.join("."),
+					message: issue.message,
+				})),
+			},
 		});
 	}
 
-	res.status(500).json({ error: "Error interno del servidor" });
+	if (error instanceof AppError) {
+		return res.status(error.statusCode).json({
+			error: {
+				code: error.code,
+				message: error.message,
+			},
+		});
+	}
+
+	res.status(500).json({
+		error: {
+			code: "INTERNAL_SERVER_ERROR",
+			message: "Internal server error",
+		},
+	});
 }
