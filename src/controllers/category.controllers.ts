@@ -16,7 +16,10 @@ import { formatCategory } from "../mappers/category.mappers.ts";
 import { countDishesByCategoryService } from "../services/dish.service.ts";
 import { NotFoundError } from "../errors/NotFoundError.ts";
 import { ConflictError } from "../errors/ConflictError.ts";
-import { CATEGORY_NOT_FOUND } from "../errors/messages.ts";
+import {
+	CATEGORY_NOT_FOUND,
+	RESTAURANT_NOT_FOUND,
+} from "../errors/messages.ts";
 
 export async function createCategoryController(req: Request, res: Response) {
 	const restaurantId = Number(req.params.restaurantId);
@@ -25,8 +28,8 @@ export async function createCategoryController(req: Request, res: Response) {
 	const restaurant = await findRestaurantByIdService(restaurantId);
 	if (!restaurant) {
 		throw new NotFoundError(
-			CATEGORY_NOT_FOUND.code,
-			CATEGORY_NOT_FOUND.message,
+			RESTAURANT_NOT_FOUND.code,
+			RESTAURANT_NOT_FOUND.message,
 		);
 	}
 
