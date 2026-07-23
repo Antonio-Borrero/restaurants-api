@@ -6,6 +6,7 @@ import {
 } from "./routes/category.routes.ts";
 import { errorHandler } from "./middlewares/errorHandler.ts";
 import { categoryDishRouter, dishRouter } from "./routes/dish.routes.ts";
+import { authRouter } from "./routes/auth.routes.ts";
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.use("/categories", categoryRouter);
 
 app.use("/categories/:categoryId/dishes", categoryDishRouter);
 app.use("/dishes", dishRouter);
+
+app.use("/auth", authRouter);
 
 app.use(errorHandler);
 export default app;
