@@ -20,7 +20,8 @@ import { RESTAURANT_NOT_FOUND } from "../errors/messages.ts";
 
 export async function createRestaurantController(req: Request, res: Response) {
 	const { name } = createRestaurantSchema.parse(req.body);
-	const newRestaurant = await createRestaurantService(name);
+	const userId = req.userId!;
+	const newRestaurant = await createRestaurantService(name, userId);
 	res.status(201).json(newRestaurant);
 }
 

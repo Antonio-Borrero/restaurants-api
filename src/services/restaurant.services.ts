@@ -1,10 +1,23 @@
 import type { Prisma } from "../../generated/prisma/client.ts";
 import { prisma } from "../lib/prisma.ts";
 
-export async function createRestaurantService(name: string) {
+export async function createRestaurantService(name: string, userId: number) {
 	return await prisma.restaurant.create({
 		data: {
 			name,
+			members: {
+				create: {
+					userId,
+					role: "Owner",
+					permissions: [
+						"MANAGE_MENU",
+						"EDIT_RESTAURANT",
+						"DELETE_RESTAURANT",
+						"MANAGE_MEMBERS",
+						"MANAGE_PERMISSIONS",
+					],
+				},
+			},
 		},
 	});
 }

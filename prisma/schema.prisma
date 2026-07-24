@@ -31,7 +31,8 @@ model RestaurantMember {
   user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   restaurantId Int
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  role         String     // "OWNER", "STAFF"... 
+  role         String     // free-text job title (e.g. "Head Chef")
+  permissions  String[]
   createdAt    DateTime   @default(now())
 
   @@unique([userId, restaurantId])
