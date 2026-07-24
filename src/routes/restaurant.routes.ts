@@ -6,12 +6,18 @@ import {
 	updateRestaurantController,
 } from "../controllers/restaurant.controllers.ts";
 import { authenticate } from "../middlewares/authenticate.ts";
+import { authorize } from "../middlewares/authorize.ts";
 
 const restaurantRouter = Router();
 
 restaurantRouter.post("/", authenticate, createRestaurantController);
 restaurantRouter.get("/:restaurantId/menu", getRestaurantMenuController);
 restaurantRouter.delete("/:restaurantId", deleteRestaurantController);
-restaurantRouter.patch("/:restaurantId", updateRestaurantController);
+restaurantRouter.patch(
+	"/:restaurantId",
+	authenticate,
+	authorize("EDIT_RESTAURANT"),
+	updateRestaurantController,
+);
 
 export default restaurantRouter;
