@@ -12,7 +12,12 @@ const restaurantRouter = Router();
 
 restaurantRouter.post("/", authenticate, createRestaurantController);
 restaurantRouter.get("/:restaurantId/menu", getRestaurantMenuController);
-restaurantRouter.delete("/:restaurantId", deleteRestaurantController);
+restaurantRouter.delete(
+	"/:restaurantId",
+	authenticate,
+	authorize("DELETE_RESTAURANT"),
+	deleteRestaurantController,
+);
 restaurantRouter.patch(
 	"/:restaurantId",
 	authenticate,
