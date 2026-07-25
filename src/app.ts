@@ -7,6 +7,10 @@ import {
 import { errorHandler } from "./middlewares/errorHandler.ts";
 import { categoryDishRouter, dishRouter } from "./routes/dish.routes.ts";
 import { authRouter } from "./routes/auth.routes.ts";
+import {
+	memberRouter,
+	restaurantMemberRouter,
+} from "./routes/restaurantMember.routes.ts";
 
 const app = express();
 
@@ -25,6 +29,9 @@ app.use("/categories/:categoryId/dishes", categoryDishRouter);
 app.use("/dishes", dishRouter);
 
 app.use("/auth", authRouter);
+
+app.use("/restaurants/:restaurantId/members", restaurantMemberRouter);
+app.use("/members", memberRouter);
 
 app.use(errorHandler);
 export default app;

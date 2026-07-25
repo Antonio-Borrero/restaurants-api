@@ -2,6 +2,7 @@ import * as argon2 from "argon2";
 import { prisma } from "../lib/prisma.ts";
 import { UnauthorizedError } from "../errors/UnauthorizedError.ts";
 import jwt from "jsonwebtoken";
+import { findUserByEmailService } from "./user.services.ts";
 
 export async function registerService(email: string, password: string) {
 	const passwordHash = await argon2.hash(password);
@@ -16,11 +17,7 @@ export async function registerService(email: string, password: string) {
 }
 
 export async function loginService(email: string, password: string) {
-	const user = await prisma.user.findUnique({
-		where: {
-			email,
-		},
-	});
+	const user = await findUserByEmailService(email);
 
 	if (!user) {
 		throw new UnauthorizedError("INVALID_CREDENTIALS", "Invalid credentials");
