@@ -3,8 +3,15 @@ import { prisma } from "../lib/prisma.ts";
 import { UnauthorizedError } from "../errors/UnauthorizedError.ts";
 import jwt from "jsonwebtoken";
 import { findUserByEmailService } from "./user.services.ts";
+import { ConflictError } from "../errors/ConflictError.ts";
 
 export async function registerService(email: string, password: string) {
+	const userExist = await findUserByEmailService(email);
+
+	if (userExist) {
+		throw new ConflictError("EMAIL_ALREADY_USED", "Email already in use");
+	}
+
 	const passwordHash = await argon2.hash(password);
 
 	return await prisma.user.create({
