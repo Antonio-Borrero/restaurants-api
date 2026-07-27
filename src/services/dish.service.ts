@@ -98,5 +98,6 @@ export async function updateDishService(dishId: number, data: UpdateDishInput) {
 					}
 				: undefined,
 		},
+		include: { translations: true },
 	});
 }
