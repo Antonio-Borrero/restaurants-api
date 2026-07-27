@@ -61,5 +61,8 @@ export async function updateCategoryService(
 				})),
 			},
 		},
+		include: {
+			translations: true,
+		},
 	});
 }
