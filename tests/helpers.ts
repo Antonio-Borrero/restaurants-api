@@ -1,5 +1,6 @@
 import request from "supertest";
 import app from "../src/app.ts";
+import { prisma } from "../src/lib/prisma.ts";
 
 export async function registerAndLogin(email: string, password: string) {
 	const register = await request(app).post("/auth/register").send({
@@ -27,4 +28,31 @@ export async function createAuthenticatedRestaurant(
 		.set("authorization", `Bearer ${token}`)
 		.send({ name });
 	return { restaurant, token };
+}
+
+export async function cleanupDatabase() {
+	await prisma.user.deleteMany();
+	await prisma.restaurant.deleteMany();
+}
+
+export async function createCategory(
+	token: string,
+	restaurantId: number,
+	translations: { locale: string; name: string }[],
+) {
+	return request(app)
+		.post(`/restaurants/${restaurantId}/categories`)
+		.set("Authorization", `Bearer ${token}`)
+		.send({ translations });
+}
+
+export async function createDish(
+	token: string,
+	categoryId: number,
+	data: object,
+) {
+	return request(app)
+		.post(`/categories/${categoryId}/dishes`)
+		.set("Authorization", `Bearer ${token}`)
+		.send(data);
 }

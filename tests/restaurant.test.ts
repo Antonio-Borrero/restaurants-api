@@ -1,14 +1,15 @@
 import { describe, it, expect, afterEach } from "vitest";
 import request from "supertest";
 import app from "../src/app.ts";
-import { prisma } from "../src/lib/prisma.ts";
-import { createAuthenticatedRestaurant, registerAndLogin } from "./helpers.ts";
+import {
+	cleanupDatabase,
+	createAuthenticatedRestaurant,
+	createCategory,
+	registerAndLogin,
+} from "./helpers.ts";
 
 describe("POST /restaurants", () => {
-	afterEach(async () => {
-		await prisma.user.deleteMany();
-		await prisma.restaurant.deleteMany();
-	});
+	afterEach(cleanupDatabase);
 
 	it("should create a new restaurant with valid data", async () => {
 		const response = await createAuthenticatedRestaurant(
@@ -87,20 +88,14 @@ describe("DELETE /restaurants", () => {
 			"testName",
 		);
 
-		const category = await request(app)
-			.post(`/restaurants/${restaurant.body.id}/categories`)
-			.set("Authorization", `Bearer ${token}`)
-			.send({
-				translations: [
-					{
-						locale: "en",
-						name: "Test category",
-					},
-				],
-			});
+		const restaurantId = restaurant.body.id;
+
+		const category = await createCategory(token, restaurantId, [
+			{ locale: "en", name: "Test category" },
+		]);
 
 		const response = await request(app)
-			.delete(`/restaurants/${restaurant.body.id}`)
+			.delete(`/restaurants/${restaurantId}`)
 			.set("Authorization", `Bearer ${token}`)
 			.send();
 
@@ -113,9 +108,7 @@ describe("DELETE /restaurants", () => {
 });
 
 describe("PATCH /restaurants", () => {
-	afterEach(async () => {
-		await prisma.restaurant.deleteMany();
-	});
+	afterEach(cleanupDatabase);
 
 	it("should update a restaurant's data", async () => {
 		const { restaurant, token } = await createAuthenticatedRestaurant(
