@@ -1,7 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
 import request from "supertest";
 import app from "../src/app.ts";
-import { prisma } from "../src/lib/prisma.ts";
 import {
 	cleanupDatabase,
 	createAuthenticatedRestaurant,
