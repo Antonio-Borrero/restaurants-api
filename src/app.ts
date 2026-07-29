@@ -11,10 +11,12 @@ import {
 	memberRouter,
 	restaurantMemberRouter,
 } from "./routes/restaurantMember.routes.ts";
+import { dynamicCors } from "./config/cors.ts";
 
 const app = express();
 
 app.use(express.json());
+app.use(dynamicCors);
 
 app.get("/", (req, res) => {
 	res.json({ mensaje: "API funcionando" });
