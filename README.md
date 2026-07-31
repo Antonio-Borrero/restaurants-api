@@ -2,6 +2,10 @@
 
 API REST para la gestión de la carta de restaurantes (categorías y platos), pensada desde el inicio para funcionar con múltiples restaurantes y múltiples idiomas.
 
+🔗 **API en vivo:** https://restaurants-api-a2hv.onrender.com
+
+> **Nota:** esta API corre en el plan gratuito de Render, que "duerme" el servicio tras 15 minutos sin tráfico. Si hace tiempo que nadie la usa, la primera petición puede tardar entre 30 y 60 segundos en responder mientras el servidor se reactiva — las siguientes son inmediatas. No es un error, es el comportamiento esperado de este plan.
+
 ## Stack
 
 - Node.js 24 (TypeScript nativo, sin build step)
