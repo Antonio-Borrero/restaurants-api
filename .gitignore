@@ -4,6 +4,7 @@ node_modules/
 # Variables de entorno (secretos — nunca a Git)
 .env
 .env.test
+.env.production
 .env.*.local
 
 # Cliente de Prisma autogenerado
