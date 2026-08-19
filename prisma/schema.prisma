@@ -17,12 +17,18 @@ model User {
 }
 
 model Restaurant {
-  id         Int                @id @default(autoincrement())
-  name       String
-  members    RestaurantMember[]
-  categories Category[]
-  createdAt  DateTime           @default(now())
-  updatedAt  DateTime           @updatedAt
+  id          Int                @id @default(autoincrement())
+  name        String
+  address     String?
+  telephone   String?
+  email       String?
+  cuisineType String?
+  description String?
+  imageUrl    String?
+  members     RestaurantMember[]
+  categories  Category[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
 }
 
 model RestaurantMember {

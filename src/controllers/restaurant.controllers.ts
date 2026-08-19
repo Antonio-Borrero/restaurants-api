@@ -19,9 +19,9 @@ import { ConflictError } from "../errors/ConflictError.ts";
 import { RESTAURANT_NOT_FOUND } from "../errors/messages.ts";
 
 export async function createRestaurantController(req: Request, res: Response) {
-	const { name } = createRestaurantSchema.parse(req.body);
+	const restaurant = createRestaurantSchema.parse(req.body);
 	const userId = req.userId!;
-	const newRestaurant = await createRestaurantService(name, userId);
+	const newRestaurant = await createRestaurantService(restaurant, userId);
 	res.status(201).json(newRestaurant);
 }
 
