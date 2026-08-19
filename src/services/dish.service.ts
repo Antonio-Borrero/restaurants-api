@@ -1,17 +1,27 @@
-import type { Prisma } from "../../generated/prisma/client.ts";
 import { prisma } from "../lib/prisma.ts";
 
-export async function createDishService(data: {
+type DishTranslationInput = {
+	locale: string;
+	name: string;
+	description?: string;
+};
+
+type CreateDishInput = {
 	categoryId: number;
 	price: number;
 	allergens: string[];
 	originalName?: string;
-	translations: {
-		locale: string;
-		name: string;
-		description?: string;
-	}[];
-}) {
+	translations: DishTranslationInput[];
+};
+
+type UpdateDishInput = {
+	price?: number;
+	allergens?: string[];
+	originalName?: string;
+	translations?: DishTranslationInput[];
+};
+
+export async function createDishService(data: CreateDishInput) {
 	return await prisma.dish.create({
 		data: {
 			categoryId: data.categoryId,
@@ -62,17 +72,6 @@ export async function countDishesByRestaurantService(restaurantId: number) {
 		},
 	});
 }
-
-type UpdateDishInput = {
-	price?: number;
-	allergens?: string[];
-	originalName?: string;
-	translations?: {
-		locale: string;
-		name: string;
-		description?: string;
-	}[];
-};
 
 export async function updateDishService(dishId: number, data: UpdateDishInput) {
 	return await prisma.dish.update({
