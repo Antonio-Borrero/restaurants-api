@@ -1,5 +1,6 @@
 import type { Prisma } from "../../generated/prisma/client.ts";
 import { prisma } from "../lib/prisma.ts";
+import { countDishesByRestaurantService } from "./dish.service.ts";
 
 type CreateRestaurantInput = {
 	name: string;
@@ -78,4 +79,28 @@ export async function updateRestaurantService(
 	});
 }
 
-export async function getAllRestaurantsService(userId: number) {}
+export async function getRestaurantsByUserService(userId: number) {
+	const restaurants = await prisma.restaurant.findMany({
+		where: {
+			members: {
+				some: { userId },
+			},
+		},
+		include: {
+			_count: {
+				select: { categories: true },
+			},
+			members: {
+				where: { userId: userId },
+				select: { role: true, permissions: true },
+			},
+		},
+	});
+
+	const restaurantsData = restaurants.map(async (restaurant) => {
+		const dishes = await countDishesByRestaurantService(restaurant.id);
+		return { ...restaurant, dishCount: dishes };
+	});
+
+	return await Promise.all(restaurantsData);
+}

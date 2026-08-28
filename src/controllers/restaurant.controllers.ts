@@ -4,9 +4,10 @@ import {
 	deleteRestaurantService,
 	findRestaurantByIdService,
 	getRestaurantMenuService,
+	getRestaurantsByUserService,
 	updateRestaurantService,
 } from "../services/restaurant.services.ts";
-import { formatMenu } from "../mappers/restaurant.mappers.ts";
+import { formatMenu, formatRestaurant } from "../mappers/restaurant.mappers.ts";
 import {
 	createRestaurantSchema,
 	getMenuQuerySchema,
@@ -83,4 +84,17 @@ export async function updateRestaurantController(req: Request, res: Response) {
 
 	const updatedRestaurant = await updateRestaurantService(restaurantId, data);
 	return res.status(200).json(updatedRestaurant);
+}
+
+export async function getRestaurantsByUserController(
+	req: Request,
+	res: Response,
+) {
+	const userId = req.userId;
+	const allUserRestaurants = await getRestaurantsByUserService(userId!);
+	const restaurants = allUserRestaurants.map((restaurant) =>
+		formatRestaurant(restaurant),
+	);
+
+	return res.status(200).json(restaurants);
 }

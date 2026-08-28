@@ -15,6 +15,22 @@ type RestaurantMenu = Prisma.RestaurantGetPayload<{
 	};
 }>;
 
+type RestaurantWithCounts = Prisma.RestaurantGetPayload<{
+	include: {
+		_count: {
+			select: {
+				categories: true;
+			};
+		};
+		members: {
+			select: {
+				role: true;
+				permissions: true;
+			};
+		};
+	};
+}> & { dishCount: number };
+
 export function formatMenu(restaurant: RestaurantMenu) {
 	return {
 		id: restaurant.id,
@@ -31,5 +47,24 @@ export function formatMenu(restaurant: RestaurantMenu) {
 				allergens: dish.allergens,
 			})),
 		})),
+	};
+}
+
+export function formatRestaurant(restaurant: RestaurantWithCounts) {
+	return {
+		id: restaurant.id,
+		name: restaurant.name,
+		address: restaurant.address,
+		telephone: restaurant.telephone,
+		email: restaurant.email,
+		cuisineType: restaurant.cuisineType,
+		description: restaurant.description,
+		imageUrl: restaurant.imageUrl,
+		createdAt: restaurant.createdAt,
+		updatedAt: restaurant.updatedAt,
+		categoryCount: restaurant._count.categories,
+		role: restaurant.members[0].role,
+		permissions: restaurant.members[0].permissions,
+		dishCount: restaurant.dishCount,
 	};
 }

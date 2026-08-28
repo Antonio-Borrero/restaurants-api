@@ -3,6 +3,7 @@ import {
 	createRestaurantController,
 	deleteRestaurantController,
 	getRestaurantMenuController,
+	getRestaurantsByUserController,
 	updateRestaurantController,
 } from "../controllers/restaurant.controllers.ts";
 import { authenticate } from "../middlewares/authenticate.ts";
@@ -11,6 +12,7 @@ import { authorize } from "../middlewares/authorize.ts";
 const restaurantRouter = Router();
 
 restaurantRouter.post("/", authenticate, createRestaurantController);
+restaurantRouter.get("/", authenticate, getRestaurantsByUserController);
 restaurantRouter.get("/:restaurantId/menu", getRestaurantMenuController);
 restaurantRouter.delete(
 	"/:restaurantId",
