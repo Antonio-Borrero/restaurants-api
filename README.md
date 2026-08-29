@@ -36,7 +36,8 @@ tests/            # tests de integración (uno por recurso) + helpers compartido
 
 ## Modelo de datos
 
-- Un `User` puede pertenecer a varios `Restaurant` (y viceversa) mediante `RestaurantMember`, con un rol asociado (`OWNER`, `STAFF`...).
+- Un `User` puede pertenecer a varios `Restaurant` (y viceversa) mediante `RestaurantMember`, con un cargo descriptivo libre (`role`) y una lista de permisos concretos (`permissions`), configurables por restaurante.
+- Cada `Restaurant` tiene un perfil extendido opcional (`address`, `telephone`, `email`, `cuisineType`, `description`, `imageUrl`), pensado para completarse desde el panel administrativo con el tiempo.
 - Cada `Restaurant` define sus propias `Category` (libres, sin categorías fijas), y cada `Category` sus propios `Dish`.
 - Los nombres de categorías y platos son multi-idioma: viven en tablas de traducción (`CategoryTranslation`, `DishTranslation`), no en columnas fijas — soporta cualquier idioma sin migrar el esquema.
 - El precio se guarda como `Decimal` (no `Float`), para evitar errores de precisión al trabajar con dinero.
@@ -127,25 +128,26 @@ Los tests de integración corren contra una base de datos separada, dedicada sol
 
 ## Endpoints disponibles
 
-| Método | Ruta                                        | Auth                  | Descripción                                                                |
-| ------ | ------------------------------------------- | --------------------- | -------------------------------------------------------------------------- |
-| POST   | `/auth/register`                            | —                     | Registra un usuario                                                        |
-| POST   | `/auth/login`                               | —                     | Inicia sesión, devuelve un JWT                                             |
-| POST   | `/restaurants`                              | 🔒                    | Crea un restaurante (el creador queda como miembro con todos los permisos) |
-| GET    | `/restaurants/:restaurantId/menu?locale=es` | —                     | Devuelve el menú completo del restaurante en el idioma pedido              |
-| PATCH  | `/restaurants/:restaurantId`                | 🔒 EDIT_RESTAURANT    | Actualiza un restaurante                                                   |
-| DELETE | `/restaurants/:restaurantId?confirm=true`   | 🔒 DELETE_RESTAURANT  | Elimina un restaurante (pide confirmación si tiene contenido)              |
-| POST   | `/restaurants/:restaurantId/categories`     | 🔒 MANAGE_MENU        | Crea una categoría (con traducciones)                                      |
-| GET    | `/categories/:categoryId?locale=es`         | —                     | Devuelve una categoría individual                                          |
-| PATCH  | `/categories/:categoryId`                   | 🔒 MANAGE_MENU        | Actualiza las traducciones de una categoría                                |
-| DELETE | `/categories/:categoryId?confirm=true`      | 🔒 MANAGE_MENU        | Elimina una categoría (pide confirmación si tiene platos)                  |
-| POST   | `/categories/:categoryId/dishes`            | 🔒 MANAGE_MENU        | Crea un plato (con traducciones)                                           |
-| GET    | `/dishes/:dishId?locale=es`                 | —                     | Devuelve un plato individual                                               |
-| PATCH  | `/dishes/:dishId`                           | 🔒 MANAGE_MENU        | Actualiza un plato (campos y/o traducciones)                               |
-| DELETE | `/dishes/:dishId`                           | 🔒 MANAGE_MENU        | Elimina un plato                                                           |
-| POST   | `/restaurants/:restaurantId/members`        | 🔒 MANAGE_MEMBERS     | Invita a un usuario ya registrado como miembro                             |
-| PATCH  | `/members/:memberId/permissions`            | 🔒 MANAGE_PERMISSIONS | Asigna o cambia los permisos de un miembro                                 |
-| DELETE | `/members/:memberId`                        | 🔒 MANAGE_MEMBERS     | Quita a un miembro del restaurante                                         |
+| Método | Ruta                                        | Auth                  | Descripción                                                                                                     |
+| ------ | ------------------------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------- |
+| POST   | `/auth/register`                            | —                     | Registra un usuario                                                                                             |
+| POST   | `/auth/login`                               | —                     | Inicia sesión, devuelve un JWT                                                                                  |
+| POST   | `/restaurants`                              | 🔒                    | Crea un restaurante (el creador queda como miembro con todos los permisos)                                      |
+| GET    | `/restaurants`                              | 🔒                    | Lista los restaurantes del usuario autenticado, con su rol, permisos, y conteo de categorías/platos en cada uno |
+| GET    | `/restaurants/:restaurantId/menu?locale=es` | —                     | Devuelve el menú completo del restaurante en el idioma pedido                                                   |
+| PATCH  | `/restaurants/:restaurantId`                | 🔒 EDIT_RESTAURANT    | Actualiza un restaurante                                                                                        |
+| DELETE | `/restaurants/:restaurantId?confirm=true`   | 🔒 DELETE_RESTAURANT  | Elimina un restaurante (pide confirmación si tiene contenido)                                                   |
+| POST   | `/restaurants/:restaurantId/categories`     | 🔒 MANAGE_MENU        | Crea una categoría (con traducciones)                                                                           |
+| GET    | `/categories/:categoryId?locale=es`         | —                     | Devuelve una categoría individual                                                                               |
+| PATCH  | `/categories/:categoryId`                   | 🔒 MANAGE_MENU        | Actualiza las traducciones de una categoría                                                                     |
+| DELETE | `/categories/:categoryId?confirm=true`      | 🔒 MANAGE_MENU        | Elimina una categoría (pide confirmación si tiene platos)                                                       |
+| POST   | `/categories/:categoryId/dishes`            | 🔒 MANAGE_MENU        | Crea un plato (con traducciones)                                                                                |
+| GET    | `/dishes/:dishId?locale=es`                 | —                     | Devuelve un plato individual                                                                                    |
+| PATCH  | `/dishes/:dishId`                           | 🔒 MANAGE_MENU        | Actualiza un plato (campos y/o traducciones)                                                                    |
+| DELETE | `/dishes/:dishId`                           | 🔒 MANAGE_MENU        | Elimina un plato                                                                                                |
+| POST   | `/restaurants/:restaurantId/members`        | 🔒 MANAGE_MEMBERS     | Invita a un usuario ya registrado como miembro                                                                  |
+| PATCH  | `/members/:memberId/permissions`            | 🔒 MANAGE_PERMISSIONS | Asigna o cambia los permisos de un miembro                                                                      |
+| DELETE | `/members/:memberId`                        | 🔒 MANAGE_MEMBERS     | Quita a un miembro del restaurante                                                                              |
 
 ## Herramientas útiles durante el desarrollo
 

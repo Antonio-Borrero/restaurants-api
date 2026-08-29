@@ -5,6 +5,7 @@ import {
 	cleanupDatabase,
 	createAuthenticatedRestaurant,
 	createCategory,
+	createDish,
 	registerAndLogin,
 } from "./helpers.ts";
 
@@ -125,5 +126,75 @@ describe("PATCH /restaurants", () => {
 
 		expect(response.status).toBe(200);
 		expect(response.body.name).toBe("updatedTestName");
+	});
+});
+
+describe("GET /restaurants", () => {
+	afterEach(cleanupDatabase);
+
+	it("should show a restaurant associated to the user with all its data", async () => {
+		const { restaurant, token } = await createAuthenticatedRestaurant(
+			"test@test.com",
+			"testPassword",
+			"testName",
+		);
+		const restaurantId = restaurant.body.id;
+
+		const category = await createCategory(token, restaurantId, [
+			{
+				locale: "en",
+				name: "Test category",
+			},
+		]);
+
+		const categoryId = category.body.id;
+
+		const dish = await createDish(token, categoryId, {
+			price: 10,
+			allergens: ["lactose"],
+			translations: [
+				{
+					locale: "en",
+					name: "Test dish",
+					description: "Test description",
+				},
+			],
+		});
+
+		const response = await request(app)
+			.get("/restaurants")
+			.set("Authorization", `Bearer ${token}`)
+			.send();
+
+		expect(response.status).toBe(200);
+		expect(response.body[0].name).toBe("testName");
+		expect(response.body[0].address).toBe(null);
+		expect(response.body[0].telephone).toBe(null);
+		expect(response.body[0].email).toBe(null);
+		expect(response.body[0].cuisineType).toBe(null);
+		expect(response.body[0].description).toBe(null);
+		expect(response.body[0].imageUrl).toBe(null);
+		expect(response.body[0].categoryCount).toBe(1);
+		expect(response.body[0].dishCount).toBe(1);
+		expect(response.body[0].role).toBe("Owner");
+		expect(response.body[0].permissions).toEqual([
+			"MANAGE_MENU",
+			"EDIT_RESTAURANT",
+			"DELETE_RESTAURANT",
+			"MANAGE_MEMBERS",
+			"MANAGE_PERMISSIONS",
+		]);
+	});
+
+	it("Should return an empty array for a new user with no restaurants associated", async () => {
+		const token = await registerAndLogin("test@test.com", "testPassword");
+
+		const response = await request(app)
+			.get("/restaurants")
+			.set("Authorization", `Bearer ${token}`)
+			.send();
+
+		expect(response.status).toBe(200);
+		expect(response.body).toEqual([]);
 	});
 });
