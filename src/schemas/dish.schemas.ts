@@ -20,6 +20,7 @@ export const createDishSchema = z.object({
 			}),
 		)
 		.min(1, "Se requiere al menos una traducción"),
+	imageUrl: z.string().optional(),
 });
 
 export const updateDishSchema = createDishSchema.partial();

@@ -12,6 +12,7 @@ type CreateDishInput = {
 	allergens: string[];
 	originalName?: string;
 	translations: DishTranslationInput[];
+	imageUrl?: string;
 };
 
 type UpdateDishInput = {
@@ -19,6 +20,7 @@ type UpdateDishInput = {
 	allergens?: string[];
 	originalName?: string;
 	translations?: DishTranslationInput[];
+	imageUrl?: string;
 };
 
 export async function createDishService(data: CreateDishInput) {
@@ -28,6 +30,7 @@ export async function createDishService(data: CreateDishInput) {
 			price: data.price,
 			allergens: data.allergens,
 			originalName: data.originalName,
+			imageUrl: data.imageUrl,
 			translations: {
 				create: data.translations,
 			},
@@ -80,6 +83,7 @@ export async function updateDishService(dishId: number, data: UpdateDishInput) {
 			price: data.price,
 			allergens: data.allergens,
 			originalName: data.originalName,
+			imageUrl: data.imageUrl,
 			translations: data.translations
 				? {
 						upsert: data.translations.map((translation) => ({

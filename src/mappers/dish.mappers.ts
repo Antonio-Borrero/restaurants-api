@@ -14,5 +14,6 @@ export function formatDish(dish: DishWithTranslations) {
 		originalName: dish.originalName,
 		price: dish.price,
 		allergens: dish.allergens,
+		imageUrl: dish.imageUrl,
 	};
 }

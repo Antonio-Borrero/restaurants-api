@@ -15,7 +15,7 @@ import { CATEGORY_NOT_FOUND, DISH_NOT_FOUND } from "../errors/messages.ts";
 
 export async function createDishController(req: Request, res: Response) {
 	const categoryId = Number(req.params.categoryId);
-	const { price, allergens, originalName, translations } =
+	const { price, allergens, originalName, translations, imageUrl } =
 		createDishSchema.parse(req.body);
 
 	const category = await findCategoryByIdService(categoryId);
@@ -33,6 +33,7 @@ export async function createDishController(req: Request, res: Response) {
 		allergens: allergens ?? [],
 		originalName,
 		translations,
+		imageUrl,
 	});
 	res.status(201).json(dish);
 }
