@@ -45,6 +45,7 @@ export function formatMenu(restaurant: RestaurantMenu) {
 				originalName: dish.originalName,
 				price: dish.price,
 				allergens: dish.allergens,
+				imageUrl: dish.imageUrl,
 			})),
 		})),
 	};
