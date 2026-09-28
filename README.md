@@ -149,6 +149,8 @@ Los tests de integración corren contra una base de datos separada, dedicada sol
 | PATCH  | `/members/:memberId/permissions`            | 🔒 MANAGE_PERMISSIONS | Asigna o cambia los permisos de un miembro                                                                      |
 | DELETE | `/members/:memberId`                        | 🔒 MANAGE_MEMBERS     | Quita a un miembro del restaurante                                                                              |
 
+> **Nota:** `POST /restaurants`, `PATCH /restaurants/:restaurantId` y `GET /restaurants` devuelven la misma forma de restaurante (con `role`, `permissions`, `categoryCount` y `dishCount`), pensada para que el panel administrativo pueda reemplazar el objeto en su lista sin necesidad de fusionar datos.
+
 ## Herramientas útiles durante el desarrollo
 
 - `npx prisma studio` — interfaz visual para ver y editar los datos directamente.
