@@ -33,6 +33,15 @@ export async function createRestaurantService(
 				},
 			},
 		},
+		include: {
+			_count: {
+				select: { categories: true },
+			},
+			members: {
+				where: { userId },
+				select: { role: true, permissions: true },
+			},
+		},
 	});
 }
 
@@ -71,11 +80,21 @@ export async function deleteRestaurantService(restaurantId: number) {
 
 export async function updateRestaurantService(
 	restaurantId: number,
+	userId: number,
 	data: Prisma.RestaurantUpdateInput,
 ) {
 	return await prisma.restaurant.update({
 		where: { id: restaurantId },
 		data,
+		include: {
+			_count: {
+				select: { categories: true },
+			},
+			members: {
+				where: { userId },
+				select: { role: true, permissions: true },
+			},
+		},
 	});
 }
 

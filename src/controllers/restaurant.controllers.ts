@@ -23,7 +23,8 @@ export async function createRestaurantController(req: Request, res: Response) {
 	const restaurant = createRestaurantSchema.parse(req.body);
 	const userId = req.userId!;
 	const newRestaurant = await createRestaurantService(restaurant, userId);
-	res.status(201).json(newRestaurant);
+
+	res.status(201).json(formatRestaurant({ ...newRestaurant, dishCount: 0 }));
 }
 
 export async function getRestaurantMenuController(req: Request, res: Response) {
@@ -72,6 +73,7 @@ export async function deleteRestaurantController(req: Request, res: Response) {
 export async function updateRestaurantController(req: Request, res: Response) {
 	const data = updateRestaurantSchema.parse(req.body);
 	const restaurantId = Number(req.params.restaurantId);
+	const userId = req.userId!;
 
 	const restaurant = await findRestaurantByIdService(restaurantId);
 
@@ -82,8 +84,16 @@ export async function updateRestaurantController(req: Request, res: Response) {
 		);
 	}
 
-	const updatedRestaurant = await updateRestaurantService(restaurantId, data);
-	return res.status(200).json(updatedRestaurant);
+	const updatedRestaurant = await updateRestaurantService(
+		restaurantId,
+		userId,
+		data,
+	);
+	const dishCount = await countDishesByRestaurantService(restaurantId);
+
+	return res
+		.status(200)
+		.json(formatRestaurant({ ...updatedRestaurant, dishCount }));
 }
 
 export async function getRestaurantsByUserController(
