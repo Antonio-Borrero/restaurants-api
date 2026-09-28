@@ -21,6 +21,16 @@ describe("POST /restaurants", () => {
 
 		expect(response.restaurant.status).toBe(201);
 		expect(response.restaurant.body.name).toBe("testName");
+		expect(response.restaurant.body.role).toBe("Owner");
+		expect(response.restaurant.body.permissions).toEqual([
+			"MANAGE_MENU",
+			"EDIT_RESTAURANT",
+			"DELETE_RESTAURANT",
+			"MANAGE_MEMBERS",
+			"MANAGE_PERMISSIONS",
+		]);
+		expect(response.restaurant.body.categoryCount).toBe(0);
+		expect(response.restaurant.body.dishCount).toBe(0);
 	});
 
 	it("should show an 400 error for invalid fields", async () => {
@@ -126,6 +136,9 @@ describe("PATCH /restaurants", () => {
 
 		expect(response.status).toBe(200);
 		expect(response.body.name).toBe("updatedTestName");
+		expect(response.body.role).toBe("Owner");
+		expect(response.body.categoryCount).toBe(0);
+		expect(response.body.dishCount).toBe(0);
 	});
 });
 
