@@ -12,6 +12,18 @@ type CreateRestaurantInput = {
 	imageUrl?: string;
 };
 
+export function restaurantStatsInclude(userId: number) {
+	return {
+		_count: {
+			select: { categories: true },
+		},
+		members: {
+			where: { userId },
+			select: { role: true, permissions: true },
+		},
+	} satisfies Prisma.RestaurantInclude;
+}
+
 export async function createRestaurantService(
 	restaurant: CreateRestaurantInput,
 	userId: number,
@@ -33,15 +45,7 @@ export async function createRestaurantService(
 				},
 			},
 		},
-		include: {
-			_count: {
-				select: { categories: true },
-			},
-			members: {
-				where: { userId },
-				select: { role: true, permissions: true },
-			},
-		},
+		include: restaurantStatsInclude(userId),
 	});
 }
 
@@ -86,15 +90,7 @@ export async function updateRestaurantService(
 	return await prisma.restaurant.update({
 		where: { id: restaurantId },
 		data,
-		include: {
-			_count: {
-				select: { categories: true },
-			},
-			members: {
-				where: { userId },
-				select: { role: true, permissions: true },
-			},
-		},
+		include: restaurantStatsInclude(userId),
 	});
 }
 
@@ -105,15 +101,7 @@ export async function getRestaurantsByUserService(userId: number) {
 				some: { userId },
 			},
 		},
-		include: {
-			_count: {
-				select: { categories: true },
-			},
-			members: {
-				where: { userId: userId },
-				select: { role: true, permissions: true },
-			},
-		},
+		include: restaurantStatsInclude(userId),
 	});
 
 	const restaurantsData = restaurants.map(async (restaurant) => {
