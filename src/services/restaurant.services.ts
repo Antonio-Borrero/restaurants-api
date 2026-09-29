@@ -63,9 +63,11 @@ export async function getRestaurantMenuService(
 		where: { id: restaurantId },
 		include: {
 			categories: {
+				orderBy: { id: "asc" },
 				include: {
 					translations: { where: { locale } },
 					dishes: {
+						orderBy: { id: "asc" },
 						include: {
 							translations: { where: { locale } },
 						},
