@@ -16,7 +16,10 @@ export const createDishSchema = z.object({
 				name: z
 					.string()
 					.min(2, "El nombre traducido debe tener al menos 2 caracteres"),
-				description: z.string().optional(),
+				description: z
+					.string()
+					.max(300, "La descripción no puede exceder los 300 caracteres")
+					.optional(),
 			}),
 		)
 		.min(1, "Se requiere al menos una traducción"),

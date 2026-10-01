@@ -148,6 +148,41 @@ describe("POST /restaurants/:restaurantId/categories/:categoryId/dishes", () => 
 			"You do not have permission to this restaurant",
 		);
 	});
+
+	it("should show a 400 error for description too long", async () => {
+		const { restaurant, token } = await createAuthenticatedRestaurant(
+			"test@test.com",
+			"testPassword",
+			"testName",
+		);
+
+		const restaurantId = restaurant.body.id;
+
+		const category = await createCategory(token, restaurantId, [
+			{
+				locale: "en",
+				name: "Test category",
+			},
+		]);
+
+		const categoryId = category.body.id;
+
+		const response = await createDish(token, categoryId, {
+			price: 10,
+			allergens: ["lactose"],
+			translations: [
+				{
+					locale: "en",
+					name: "Test dish",
+					description: "a".repeat(301),
+				},
+			],
+		});
+
+		expect(response.status).toBe(400);
+		expect(response.body.error.code).toBe("VALIDATION_ERROR");
+		expect(response.body.error.message).toBe("Invalid data");
+	});
 });
 
 describe("PATCH /dishes/:dishId", () => {
