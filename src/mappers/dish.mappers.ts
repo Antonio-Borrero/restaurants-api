@@ -15,5 +15,6 @@ export function formatDish(dish: DishWithTranslations) {
 		price: dish.price,
 		allergens: dish.allergens,
 		imageUrl: dish.imageUrl,
+		categoryId: dish.categoryId,
 	};
 }
