@@ -7,7 +7,7 @@ const dynamicCorsOptions = function (req, callback) {
 	if (req.method === "GET") {
 		corsOptions = { origin: "*" };
 	} else {
-		corsOptions = { origin: process.env.ADMIN_PANEL_ORIGIN };
+		corsOptions = { origin: process.env.ADMIN_PANEL_ORIGIN?.split(",") };
 	}
 	callback(null, corsOptions);
 };
