@@ -45,6 +45,31 @@ describe("POST /restaurants", () => {
 		expect(response.body.error.code).toBe("VALIDATION_ERROR");
 		expect(response.body.error.message).toBe("Invalid data");
 	});
+
+	it("should return a 400 error when description exceeds 200 characters", async () => {
+		const token = await registerAndLogin("test@test.com", "testPassword");
+
+		const response = await request(app)
+			.post("/restaurants")
+			.set("Authorization", `Bearer ${token}`)
+			.send({ name: "testName", description: "a".repeat(201) });
+
+		expect(response.status).toBe(400);
+		expect(response.body.error.code).toBe("VALIDATION_ERROR");
+		expect(response.body.error.message).toBe("Invalid data");
+	});
+
+	it("should accept a description of exactly 200 characters", async () => {
+		const token = await registerAndLogin("test@test.com", "testPassword");
+
+		const response = await request(app)
+			.post("/restaurants")
+			.set("Authorization", `Bearer ${token}`)
+			.send({ name: "testName", description: "a".repeat(200) });
+
+		expect(response.status).toBe(201);
+		expect(response.body.description.length).toBe(200);
+	});
 });
 
 describe("DELETE /restaurants", () => {
@@ -139,6 +164,24 @@ describe("PATCH /restaurants", () => {
 		expect(response.body.role).toBe("Owner");
 		expect(response.body.categoryCount).toBe(0);
 		expect(response.body.dishCount).toBe(0);
+	});
+
+	it("should return a 400 error on update when description exceeds 200 characters", async () => {
+		const { restaurant, token } = await createAuthenticatedRestaurant(
+			"test@test.com",
+			"testPassword",
+			"testName",
+		);
+		const response = await request(app)
+			.patch(`/restaurants/${restaurant.body.id}`)
+			.set("Authorization", `Bearer ${token}`)
+			.send({
+				description: "a".repeat(201),
+			});
+
+		expect(response.status).toBe(400);
+		expect(response.body.error.code).toBe("VALIDATION_ERROR");
+		expect(response.body.error.message).toBe("Invalid data");
 	});
 });
 

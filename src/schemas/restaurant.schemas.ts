@@ -6,7 +6,10 @@ export const createRestaurantSchema = z.object({
 	telephone: z.string().optional(),
 	email: z.email().optional(),
 	cuisineType: z.string().optional(),
-	description: z.string().optional(),
+	description: z
+		.string()
+		.max(200, "La descripción no puede exceder los 200 caracteres")
+		.optional(),
 	imageUrl: z.string().optional(),
 });
 

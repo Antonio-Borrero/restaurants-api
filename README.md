@@ -43,6 +43,7 @@ tests/            # tests de integración (uno por recurso) + helpers compartido
 - El precio se guarda como `Decimal` (no `Float`), para evitar errores de precisión al trabajar con dinero.
 - Borrados destructivos (categoría, restaurante) requieren confirmación explícita (`?confirm=true`) si tienen contenido asociado.
 - Quien crea un restaurante queda automáticamente como su primer miembro, con los 5 permisos disponibles.
+- Las descripciones tienen longitud máxima, validada con Zod en la entrada: 200 caracteres en `Restaurant` y 300 en cada `DishTranslation`.
 
 ## Autenticación y permisos
 
