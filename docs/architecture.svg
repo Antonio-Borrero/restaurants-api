@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3dd6b5"/></marker>
+<marker id="ahw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e8806b"/></marker>
+</defs>
+<rect width="1920" height="1080" fill="#1a1a1a"/>
+<text x="70" y="78" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="22" font-weight="normal" fill="#3dd6b5" text-anchor="start" letter-spacing="4">BACKEND · REST API</text>
+<text x="70" y="138" font-family="DejaVu Sans, Verdana, sans-serif" font-size="56" font-weight="bold" fill="#f2f2f2" text-anchor="start" letter-spacing="0">restaurants-api</text>
+<text x="70" y="180" font-family="DejaVu Sans, Verdana, sans-serif" font-size="28" font-weight="normal" fill="#a0a0a0" text-anchor="start" letter-spacing="0">Request flow · one multi-tenant API serving many restaurants</text>
+<rect x="60" y="320" width="250" height="200" rx="10" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="185" y="372" font-family="DejaVu Sans, Verdana, sans-serif" font-size="34" font-weight="bold" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">Client</text>
+<text x="185" y="414" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="middle" letter-spacing="0">restaurants-admin</text>
+<text x="185" y="442" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="middle" letter-spacing="0">(Angular)</text>
+<text x="185" y="484" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="middle" letter-spacing="0">Postman</text>
+<line x1="310" y1="420" x2="346" y2="420" stroke="#3dd6b5" stroke-width="2.5"  marker-end="url(#ah)"/>
+<rect x="350" y="205" width="900" height="595" rx="10" fill="#1f1f1f" stroke="#3a3a3a" stroke-width="2"/>
+<text x="376" y="244" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="bold" fill="#a0a0a0" text-anchor="start" letter-spacing="4">EXPRESS 5 API</text>
+<line x1="370" y1="260" x2="1230" y2="260" stroke="#3a3a3a" stroke-width="2"/>
+<rect x="372" y="274" width="856" height="68" rx="8" fill="#252525" stroke="#3a3a3a" stroke-width="2"/>
+<text x="396" y="303" font-family="DejaVu Sans, Verdana, sans-serif" font-size="23" font-weight="bold" fill="#f2f2f2" text-anchor="start" letter-spacing="0">Dynamic CORS</text>
+<text x="396" y="330" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">GET open to any origin · writes only from the admin panel</text>
+<rect x="372" y="352" width="856" height="68" rx="8" fill="#252525" stroke="#3a3a3a" stroke-width="2"/>
+<text x="396" y="381" font-family="DejaVu Sans, Verdana, sans-serif" font-size="23" font-weight="bold" fill="#f2f2f2" text-anchor="start" letter-spacing="0">Router</text>
+<text x="396" y="408" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">auth · restaurants · categories · dishes · members</text>
+<rect x="372" y="430" width="856" height="112" rx="8" fill="#252525" stroke="#3dd6b5" stroke-width="2"/>
+<rect x="372" y="430" width="6" height="112" rx="2" fill="#3dd6b5"/>
+<text x="396" y="462" font-family="DejaVu Sans, Verdana, sans-serif" font-size="23" font-weight="bold" fill="#3dd6b5" text-anchor="start" letter-spacing="0">Security middleware</text>
+<text x="396" y="500" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="bold" fill="#f2f2f2" text-anchor="start" letter-spacing="0">authenticate</text>
+<text x="396" y="528" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">JWT → userId</text>
+<text x="646" y="500" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="bold" fill="#f2f2f2" text-anchor="start" letter-spacing="0">attachRestaurantId</text>
+<text x="646" y="528" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">finds restaurant</text>
+<text x="941" y="500" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="bold" fill="#f2f2f2" text-anchor="start" letter-spacing="0">authorize(permission)</text>
+<text x="941" y="528" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">has the permission?</text>
+<text x="588" y="502" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="24" font-weight="normal" fill="#3dd6b5" text-anchor="start" letter-spacing="0">→</text>
+<text x="896" y="502" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="24" font-weight="normal" fill="#3dd6b5" text-anchor="start" letter-spacing="0">→</text>
+<rect x="372" y="552" width="856" height="68" rx="8" fill="#252525" stroke="#3a3a3a" stroke-width="2"/>
+<text x="396" y="581" font-family="DejaVu Sans, Verdana, sans-serif" font-size="23" font-weight="bold" fill="#f2f2f2" text-anchor="start" letter-spacing="0">Controller</text>
+<text x="396" y="608" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">validates with Zod and sets the HTTP status</text>
+<rect x="372" y="630" width="856" height="68" rx="8" fill="#252525" stroke="#3a3a3a" stroke-width="2"/>
+<text x="396" y="659" font-family="DejaVu Sans, Verdana, sans-serif" font-size="23" font-weight="bold" fill="#f2f2f2" text-anchor="start" letter-spacing="0">Service</text>
+<text x="396" y="686" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">business rules · Prisma queries</text>
+<rect x="372" y="708" width="856" height="68" rx="8" fill="#252525" stroke="#3a3a3a" stroke-width="2"/>
+<text x="396" y="737" font-family="DejaVu Sans, Verdana, sans-serif" font-size="23" font-weight="bold" fill="#f2f2f2" text-anchor="start" letter-spacing="0">Mapper</text>
+<text x="396" y="764" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">applies ?locale= and shapes the response</text>
+<line x1="1250" y1="425" x2="1286" y2="425" stroke="#3dd6b5" stroke-width="2.5"  marker-end="url(#ah)"/>
+<rect x="1290" y="340" width="230" height="170" rx="10" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="1405" y="398" font-family="DejaVu Sans, Verdana, sans-serif" font-size="32" font-weight="bold" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">Prisma 7</text>
+<text x="1405" y="436" font-family="DejaVu Sans, Verdana, sans-serif" font-size="22" font-weight="normal" fill="#a0a0a0" text-anchor="middle" letter-spacing="0">ORM</text>
+<text x="1405" y="476" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="middle" letter-spacing="0">type-safe queries</text>
+<line x1="1520" y1="425" x2="1566" y2="425" stroke="#3dd6b5" stroke-width="2.5"  marker-end="url(#ah)"/>
+<path d="M1580,322 L1580,512 A140.0,24 0 0 0 1860,512 L1860,322" fill="#134f49" stroke="#3dd6b5" stroke-width="2"/>
+<ellipse cx="1720.0" cy="322" rx="140.0" ry="24" fill="#1d4a45" stroke="#3dd6b5" stroke-width="2"/>
+<text x="1720.0" y="424" font-family="DejaVu Sans, Verdana, sans-serif" font-size="32" font-weight="bold" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">PostgreSQL</text>
+<text x="1720.0" y="460" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#3dd6b5" text-anchor="middle" letter-spacing="0">multi-tenant schema</text>
+<line x1="800" y1="800" x2="800" y2="826" stroke="#e8806b" stroke-width="2.5" stroke-dasharray="6 6" marker-end="url(#ahw)"/>
+<text x="814" y="822" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="18" font-weight="normal" fill="#e8806b" text-anchor="start" letter-spacing="0">throw</text>
+<rect x="350" y="830" width="900" height="96" rx="10" fill="#241f1e" stroke="#e8806b" stroke-width="2"/>
+<text x="374" y="868" font-family="DejaVu Sans, Verdana, sans-serif" font-size="23" font-weight="bold" fill="#e8806b" text-anchor="start" letter-spacing="0">Central errorHandler · one error format</text>
+<text x="374" y="904" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="start" letter-spacing="0">{ "error": { "code": "DISH_NOT_FOUND", "message": "…" } }</text>
+<rect x="1290" y="560" width="570" height="152" rx="10" fill="#1a1a1a" stroke="#3dd6b5" stroke-width="2"/>
+<text x="1314" y="598" font-family="DejaVu Sans, Verdana, sans-serif" font-size="23" font-weight="bold" fill="#3dd6b5" text-anchor="start" letter-spacing="0">Per-restaurant permissions</text>
+<text x="1314" y="634" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">RestaurantMember { role, permissions[] }</text>
+<text x="1314" y="668" font-family="DejaVu Sans, Verdana, sans-serif" font-size="20" font-weight="normal" fill="#a0a0a0" text-anchor="start" letter-spacing="0">each restaurant assigns permissions</text>
+<text x="1314" y="694" font-family="DejaVu Sans, Verdana, sans-serif" font-size="20" font-weight="normal" fill="#a0a0a0" text-anchor="start" letter-spacing="0">to each person; no global roles</text>
+<rect x="1290" y="734" width="570" height="152" rx="10" fill="#1a1a1a" stroke="#3dd6b5" stroke-width="2"/>
+<text x="1314" y="772" font-family="DejaVu Sans, Verdana, sans-serif" font-size="23" font-weight="bold" fill="#3dd6b5" text-anchor="start" letter-spacing="0">Multi-language</text>
+<text x="1314" y="808" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#aaaaaa" text-anchor="start" letter-spacing="0">CategoryTranslation · DishTranslation</text>
+<text x="1314" y="842" font-family="DejaVu Sans, Verdana, sans-serif" font-size="20" font-weight="normal" fill="#a0a0a0" text-anchor="start" letter-spacing="0">adding a language needs no schema change;</text>
+<text x="1314" y="868" font-family="DejaVu Sans, Verdana, sans-serif" font-size="20" font-weight="normal" fill="#a0a0a0" text-anchor="start" letter-spacing="0">selected with ?locale=</text>
+<path d="M1228,486 C1265,486 1255,600 1288,620" fill="none" stroke="#3dd6b5" stroke-width="2" stroke-dasharray="5 6"/>
+<path d="M1228,742 C1262,742 1258,780 1288,795" fill="none" stroke="#3dd6b5" stroke-width="2" stroke-dasharray="5 6"/>
+<text x="70" y="976" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="bold" fill="#a0a0a0" text-anchor="start" letter-spacing="4">STACK</text>
+<rect x="70" y="994" width="157.0" height="50" rx="25" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="148.5" y="1026" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">Node.js 24</text>
+<rect x="241.0" y="994" width="157.0" height="50" rx="25" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="319.5" y="1026" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">TypeScript</text>
+<rect x="412.0" y="994" width="144.89999999999998" height="50" rx="25" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="484.45" y="1026" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">Express 5</text>
+<rect x="570.9" y="994" width="132.8" height="50" rx="25" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="637.3" y="1026" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">Prisma 7</text>
+<rect x="717.7" y="994" width="157.0" height="50" rx="25" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="796.2" y="1026" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">PostgreSQL</text>
+<rect x="888.7" y="994" width="96.5" height="50" rx="25" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="936.95" y="1026" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">Zod 4</text>
+<rect x="999.2" y="994" width="181.2" height="50" rx="25" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="1089.8" y="1026" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">JWT + argon2</text>
+<rect x="1194.4" y="994" width="253.79999999999998" height="50" rx="25" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="1321.3000000000002" y="1026" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">Vitest + Supertest</text>
+<rect x="1462.2" y="994" width="205.4" height="50" rx="25" fill="#222222" stroke="#3a3a3a" stroke-width="2"/>
+<text x="1564.9" y="1026" font-family="DejaVu Sans Mono, Consolas, monospace" font-size="20" font-weight="normal" fill="#f2f2f2" text-anchor="middle" letter-spacing="0">Docker Compose</text>
+</svg>
